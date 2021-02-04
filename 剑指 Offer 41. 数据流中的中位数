@@ -1,0 +1,68 @@
+/*
+如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
+例如，[2,3,4] 的中位数是 3, [2,3] 的中位数是 (2 + 3) / 2 = 2.5
+
+设计一个支持以下两种操作的数据结构：
+void addNum(int num) - 从数据流中添加一个整数到数据结构中。
+double findMedian() - 返回目前所有元素的中位数。
+
+
+思路：利用大顶堆小顶堆。以中位数为分界，将数据分为两部分，前半部分比后半部分小。因此前半部分用大顶堆来存储，后半部分用小顶堆来存储，并且在数据流插入过程中需要维持两个堆的平衡，个数不能超过1。
+时间复杂度：添加数字O(logn)，查找中位数O(1)，空间复杂度O(n)，其中n为数据流元素个数。
+*/
+class MedianFinder {
+    vector<int> min;
+    vector<int> max;
+public:
+    /** initialize your data structure here. */
+    MedianFinder() {
+
+    }
+    
+    void addNum(int num) {
+        if(((min.size() + max.size()) & 1) == 0){ //插入大顶堆
+            if(max.size() > 0 && num < max[0]){   
+                //  当前元素小于大顶堆堆顶，重新选出最大值插入小顶堆
+                max.push_back(num);
+                push_heap(max.begin(), max.end(), less<int>());
+
+                num = max[0];
+                pop_heap(max.begin(), max.end(), less<int>());
+
+                max.pop_back();
+            }
+            min.push_back(num);
+            push_heap(min.begin(), min.end(), greater<int>());
+        }
+        else{   //插入大顶堆
+            if(min.size() > 0 && num > min[0]){
+                //当前元素大于小顶堆堆顶，重新选出最小值插入大顶堆
+                min.push_back(num);
+                push_heap(min.begin(), min.end(), greater<int>());
+
+                num = min[0];
+                pop_heap(min.begin(), min.end(), greater<int>());
+                min.pop_back();
+            }
+            max.push_back(num);
+            push_heap(max.begin(), max.end(), less<int>());
+        }
+    }
+    
+    double findMedian() {
+        int size = min.size() + max.size();
+        if(size <= 0)
+            return 0;
+        if((size & 1) == 0){
+            return double(min[0] + max[0]) / 2;
+        }
+        return double(min[0]);
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
