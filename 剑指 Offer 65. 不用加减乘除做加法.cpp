@@ -9,9 +9,11 @@ class Solution {
 public:
     int add(int a, int b) {
         while(b != 0){
-            unsigned int xor_result = (a ^ b);
-            unsigned int and_result = (unsigned int)(a & b) << 1;
-            a = xor_result;
+            //unsigned int xor_result = (a ^ b);
+            //unsigned int and_result = (unsigned int)(a & b) << 1;
+            int and_result = (unsigned int)(a & b) << 1;
+            //a = xor_result;
+            a = (a ^ b);
             b = and_result;
         }
         return a;
