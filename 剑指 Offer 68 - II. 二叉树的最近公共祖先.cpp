@@ -8,8 +8,6 @@
 当前节点的右节点返回为空时，表示两个节点的最近公共祖先节点不在当前节点的右子树，直接返回当前节点的左子树。
 时间复杂度O(n)，空间复杂度O(n)，其中n为二叉树节点个数。
 具体看题解：https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/solution/mian-shi-ti-68-ii-er-cha-shu-de-zui-jin-gong-gon-7/
-
-
 */
 /**
  * Definition for a binary tree node.
