@@ -15,6 +15,9 @@
 
 思路：使用递归，前序遍历的第一个节点为当前树（子树）的根结点，在中序遍历中找到该节点，该节点左边的为其左子树，右边为其右子树，一直递归下去。时间复杂福O(n)，空间复杂度O(n)。非递归方法还没掌握，继续跟进。
 卡住的点：元素只有一个的时候的处理；vector初始化问题要注意，比如vector<int> pre(preorder.begin(), preorder.begin() + 1)里面只有preorder[0]这个元素。
+
+提高效率的方法：https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/solution/mian-shi-ti-07-zhong-jian-er-cha-shu-di-gui-fa-qin/
+主要就是减少new vector的次数，传参用int类型边界值来代替，具体看题解。
 */
 /**
  * Definition for a binary tree node.
